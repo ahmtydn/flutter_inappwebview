@@ -1436,6 +1436,7 @@ class MacOSInAppWebViewController extends PlatformInAppWebViewController
                 _inAppBrowserEventHandler != null) {
               Map<String, dynamic> arguments =
                   handlerData.args[0].cast<String, dynamic>();
+              print("arguments: $arguments");
               AjaxRequest request = AjaxRequest.fromMap(arguments)!;
 
               if (webviewParams != null &&
@@ -1481,9 +1482,9 @@ class MacOSInAppWebViewController extends PlatformInAppWebViewController
                         _controllerFromPlatform, request))
                     ?.toNativeValue());
               else
-                return jsonEncode((await _inAppBrowserEventHandler!
-                        .onAjaxProgress(request))
-                    ?.toNativeValue());
+                return jsonEncode(
+                    (await _inAppBrowserEventHandler!.onAjaxProgress(request))
+                        ?.toNativeValue());
             }
             return null;
           case "shouldInterceptFetchRequest":
@@ -2028,10 +2029,8 @@ class MacOSInAppWebViewController extends PlatformInAppWebViewController
     InAppWebViewSettings? settings = await getSettings();
 
     Map<dynamic, dynamic>? options = settings?.toMap();
-    if (options != null) {
-      options = options.cast<String, dynamic>();
-      return InAppWebViewGroupOptions.fromMap(options as Map<String, dynamic>);
-    }
+    options = options.cast<String, dynamic>();
+    return InAppWebViewGroupOptions.fromMap(options as Map<String, dynamic>);
 
     return null;
   }
@@ -2050,10 +2049,8 @@ class MacOSInAppWebViewController extends PlatformInAppWebViewController
 
     Map<dynamic, dynamic>? settings =
         await channel?.invokeMethod('getSettings', args);
-    if (settings != null) {
-      settings = settings.cast<String, dynamic>();
-      return InAppWebViewSettings.fromMap(settings as Map<String, dynamic>);
-    }
+    settings = settings.cast<String, dynamic>();
+    return InAppWebViewSettings.fromMap(settings as Map<String, dynamic>);
 
     return null;
   }
@@ -2148,10 +2145,8 @@ class MacOSInAppWebViewController extends PlatformInAppWebViewController
     args.putIfAbsent("settings", () => settings?.toMap());
     String? jobId =
         await channel?.invokeMethod<String?>('printCurrentPage', args);
-    if (jobId != null) {
-      return MacOSPrintJobController(
-          PlatformPrintJobControllerCreationParams(id: jobId));
-    }
+    return MacOSPrintJobController(
+        PlatformPrintJobControllerCreationParams(id: jobId));
     return null;
   }
 
