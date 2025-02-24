@@ -2029,10 +2029,9 @@ class MacOSInAppWebViewController extends PlatformInAppWebViewController
     InAppWebViewSettings? settings = await getSettings();
 
     Map<dynamic, dynamic>? options = settings?.toMap();
-    options = options.cast<String, dynamic>();
+    options = options?.cast<String, dynamic>();
+    if (options == null) return null;
     return InAppWebViewGroupOptions.fromMap(options as Map<String, dynamic>);
-
-    return null;
   }
 
   @override
@@ -2049,10 +2048,9 @@ class MacOSInAppWebViewController extends PlatformInAppWebViewController
 
     Map<dynamic, dynamic>? settings =
         await channel?.invokeMethod('getSettings', args);
-    settings = settings.cast<String, dynamic>();
+    settings = settings?.cast<String, dynamic>();
+    if (settings == null) return null;
     return InAppWebViewSettings.fromMap(settings as Map<String, dynamic>);
-
-    return null;
   }
 
   @override
@@ -2145,9 +2143,9 @@ class MacOSInAppWebViewController extends PlatformInAppWebViewController
     args.putIfAbsent("settings", () => settings?.toMap());
     String? jobId =
         await channel?.invokeMethod<String?>('printCurrentPage', args);
+    if (jobId == null) return null;
     return MacOSPrintJobController(
         PlatformPrintJobControllerCreationParams(id: jobId));
-    return null;
   }
 
   @override
