@@ -24,15 +24,15 @@ public class CredentialDatabase: ChannelDelegate {
             case "getAllAuthCredentials":
                 var allCredentials: [[String: Any?]] = []
                 for (protectionSpace, credentials) in CredentialDatabase.credentialStore.allCredentials {
-                    var credentials: [[String: Any?]] = []
+                    var crendentials: [[String: Any?]] = []
                     for c in credentials {
                         let credential: [String: Any?] = c.value.toMap()
-                        credentials.append(credential)
+                        crendentials.append(credential)
                     }
-                    if credentials.count > 0 {
+                    if crendentials.count > 0 {
                         let dict: [String : Any] = [
                             "protectionSpace": protectionSpace.toMap(),
-                            "credentials": credentials
+                            "credentials": crendentials
                         ]
                         allCredentials.append(dict)
                     }
@@ -40,7 +40,7 @@ public class CredentialDatabase: ChannelDelegate {
                 result(allCredentials)
                 break
             case "getHttpAuthCredentials":
-                var credentials: [[String: Any?]] = []
+                var crendentials: [[String: Any?]] = []
             
                 let host = arguments!["host"] as! String
                 let urlProtocol = arguments!["protocol"] as? String
@@ -54,12 +54,12 @@ public class CredentialDatabase: ChannelDelegate {
                     if protectionSpace.host == host && protectionSpace.realm == realm &&
                     protectionSpace.protocol == urlProtocol && protectionSpace.port == urlPort {
                         for c in credentials {
-                            credentials.append(c.value.toMap())
+                            crendentials.append(c.value.toMap())
                         }
                         break
                     }
                 }
-                result(credentials)
+                result(crendentials)
                 break
             case "setHttpAuthCredential":
                 let host = arguments!["host"] as! String
