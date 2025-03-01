@@ -1436,7 +1436,6 @@ class MacOSInAppWebViewController extends PlatformInAppWebViewController
                 _inAppBrowserEventHandler != null) {
               Map<String, dynamic> arguments =
                   handlerData.args[0].cast<String, dynamic>();
-              print("arguments: $arguments");
               AjaxRequest request = AjaxRequest.fromMap(arguments)!;
 
               if (webviewParams != null &&
